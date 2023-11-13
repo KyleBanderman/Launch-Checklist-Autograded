@@ -5,22 +5,24 @@ require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     // Here is the HTML formatting for our mission target div.
-    /*
+    const target = document.getElementById("missionTarget");
+    target.innerHTML = `
+    
                  <h2>Mission Destination</h2>
                  <ol>
-                     <li>Name: </li>
-                     <li>Diameter: </li>
+                     <li>Name: ${name}</li>
+                     <li>Diameter: ${diameter}</li>
                      <li>Star: ${star}</li>
-                     <li>Distance from Earth: </li>
-                     <li>Number of Moons: </li>
+                     <li>Distance from Earth: ${distance}</li>
+                     <li>Number of Moons: ${moons}</li>
                  </ol>
-                 <img src="">
-    */
+                 <img src="${imageUrl}">
+    
+   `
  }
  
  function validateInput(testInput) {
     if (testInput === "") {
-        window.alert("All fields are required")
         return "Empty";
     } else if (isNaN(testInput)){
         return "Not a Number";
@@ -34,28 +36,38 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         let coPilotValidate = validateInput(copilot);
         let fuelLevelValidate = validateInput(fuelLevel);
         let cargoLevelValidate = validateInput(cargoLevel);
+        const pilotStatus = document.getElementById("pilotStatus");
+        const copilotStatus = document.getElementById("copilotStatus");
+        const fuelStatus = document.getElementById("fuelStatus");
+        const cargoStatus = document.getElementById("cargoStatus");
+        const launchStatus = document.getElementById("launchStatus");
         let shuttleLaunch = [];
         let iteratorLaunch = 0;
+        //[pilotText, copilotText, faultyItems, launchStatus, fuelStatus, cargoStatus]
+            if (pilot === "" || copilot === "" || fuelLevel === "", cargoLevel === "") {
+                window.alert("All fields are required")
+            }
         if (pilotValidate === "Not a Number") {
             shuttleLaunch.push(true);
-            list[0].innerHTML = `Pilot: ${pilot} Ready`
+            pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`
         } else {
             shuttleLaunch.push(false);
         }
         if (coPilotValidate === "Not a Number") {
             shuttleLaunch.push(true);
-            list[1].innerHTML = `Co-pilot: ${copilot} Ready`
+            copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`
         } else {
             shuttleLaunch.push(false);
         }
         if (fuelLevelValidate === "Is a Number") {
             if (fuelLevel < 10000) {
-                list[2].style.visibility = "visible";
-                list[3].innerHTML = `Shuttle not ready for launch`
-                list[3].style.color = "red";
-                list[4].innerHTML = `There is not enough fuel for the journey.`
+                list.style.visibility = "visible";
+                launchStatus.innerHTML = `Shuttle Not Ready for Launch`
+                launchStatus.style.color = "red";
+                fuelStatus.innerHTML = `Fuel level too low for launch`
                 shuttleLaunch.push(false);
             } else {
+                fuelStatus.innerHTML = `Fuel level high enough for launch`
             shuttleLaunch.push(true);
             }
         } else {
@@ -63,11 +75,12 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         }
         if (cargoLevelValidate === "Is a Number") {
             if (cargoLevel > 10000) {
-                list[2].style.visibility = "visible";
-                list[3].innerHTML = `Shuttle not ready for launch`
-                list[3].style.color = "red";
-                list[5].innerHTML = `There is too much mass onboard for the journey.`
+                list.style.visibility = "visible";
+                launchStatus.innerHTML = `Shuttle Not Ready for Launch`
+                launchStatus.style.color = "red";
+                cargoStatus.innerHTML = `Cargo mass too heavy for launch`
             } else {
+                cargoStatus.innerHTML = `Cargo mass low enough for launch`
                 shuttleLaunch.push(true);
             }
             
@@ -80,9 +93,8 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
             }
         }
         if (iteratorLaunch === 4) {
-            list[3].innerHTML = `Shuttle is ready for launch`
-            list[3].style.color = "green";
-            list[2].style.visibility = "hidden";
+            launchStatus.innerHTML = `Shuttle is Ready for Launch`
+            launchStatus.style.color = "green";
         }
  
 
@@ -90,13 +102,16 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  async function myFetch() {
      let planetsReturned;
  
-     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
-        return response;
-    });
+     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json")//.then( function(response) {
+        //return response;
+    //});
+    planetsReturned = await planetsReturned.json()
      return planetsReturned;
  }
  
  function pickPlanet(planets) {
+    let randomPlanet = Math.floor(Math.random() * planets.length);
+    return planets[randomPlanet];
 
  }
  
