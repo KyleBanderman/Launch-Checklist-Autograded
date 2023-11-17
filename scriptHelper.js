@@ -36,7 +36,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         let coPilotValidate = validateInput(copilot);
         let fuelLevelValidate = validateInput(fuelLevel);
         let cargoLevelValidate = validateInput(cargoLevel);
-        const pilotStatus = document.getElementById("pilotStatus");
+        const pilotStatus = document.getElementById("pilotStatus"); //start debugging here
         const copilotStatus = document.getElementById("copilotStatus");
         const fuelStatus = document.getElementById("fuelStatus");
         const cargoStatus = document.getElementById("cargoStatus");
