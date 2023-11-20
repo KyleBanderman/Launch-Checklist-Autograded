@@ -68,7 +68,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                 shuttleLaunch.push(false);
             } else {
                 fuelStatus.innerHTML = `Fuel level high enough for launch`
-            shuttleLaunch.push(true);
+                shuttleLaunch.push(true);
             }
         } else {
             shuttleLaunch.push(false);
