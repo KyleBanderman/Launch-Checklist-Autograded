@@ -12,7 +12,7 @@ window.addEventListener("load", function () {
         const fuelLevel = document.getElementsByName("fuelLevel");
         const cargoMass = document.getElementsByName("cargoMass");
         let list = document.getElementById("faultyItems")
-        formSubmission(this.document, list, pilot[0].value, coPilot[0].value, fuelLevel[0].value, cargoMass[0].value)
+        formSubmission(document, list, pilot[0].value, coPilot[0].value, fuelLevel[0].value, cargoMass[0].value)
     })
     let listedPlanets = myFetch();
 
